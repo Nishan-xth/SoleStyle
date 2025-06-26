@@ -12,7 +12,7 @@ const featuredProducts = [
     name: "Classic White Sneakers",
     price: 89.99,
     salePrice: 79.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop",
     rating: 4.8,
     reviews: 124,
     badge: "Best Seller",
@@ -21,7 +21,7 @@ const featuredProducts = [
     id: "2",
     name: "Urban Runner Pro",
     price: 129.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400&h=400&fit=cro",
     rating: 4.6,
     reviews: 89,
     badge: "New",
@@ -31,7 +31,7 @@ const featuredProducts = [
     name: "Oxford Business Shoes",
     price: 199.99,
     salePrice: 179.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=400&h=400&fit=crop",
     rating: 4.9,
     reviews: 67,
     badge: "Premium",
@@ -40,7 +40,7 @@ const featuredProducts = [
     id: "4",
     name: "Summer Comfort Sandals",
     price: 49.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=400&fit=crop",
     rating: 4.5,
     reviews: 156,
     badge: "Popular",
@@ -51,25 +51,25 @@ const categories = [
   {
     name: "Sneakers",
     slug: "sneakers",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=200&fit=crop",
     count: 45,
   },
   {
     name: "Boots",
     slug: "boots",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=300&h=200&fit=crop",
     count: 32,
   },
   {
     name: "Athletic",
     slug: "athletic",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=300&h=200&fit=crop",
     count: 28,
   },
   {
     name: "Dress Shoes",
     slug: "dress-shoes",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=200&fit=crop",
     count: 19,
   },
 ]
@@ -101,20 +101,23 @@ export default function HomePage() {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-slate-900 to-slate-700 text-white">
-        <div className="container mx-auto px-4 py-24">
+        <section className="relative bg-gradient-to-br from-gray-50 to-gray-100 py-20">
+        <div className="container mx-auto ">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
+               <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100">
+                New Collection 2024
+              </Badge>
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
                 Step Into
                 <span className="text-primary"> Style</span>
               </h1>
-              <p className="text-xl text-gray-300 max-w-lg">
+              <p className="text-xl text-gray-600 max-w-lg">
                 Discover our premium collection of footwear designed for comfort, style, and durability. From casual
                 sneakers to elegant dress shoes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-8" asChild>
+                <Button size="lg"     className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3"  asChild>
                   <Link href="/products">
                     Shop Now
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -123,7 +126,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="text-lg px-8 border-white text-white hover:bg-white hover:text-slate-900"
+                  // className="text-lg px-8 border-white text-white hover:bg-white hover:text-slate-900"
                   asChild
                 >
                   <Link href="/categories">Browse Categories</Link>
@@ -132,7 +135,7 @@ export default function HomePage() {
             </div>
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=500&width=600"
+                src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&h=600&fit=crop"
                 alt="Featured shoes collection"
                 width={600}
                 height={500}
@@ -147,7 +150,7 @@ export default function HomePage() {
       <section className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
-            <Card key={index} className="text-center p-6">
+            <Card key={index}className="text-center p-4 group cursor-pointer border-0 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <CardContent className="space-y-4">
                 <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                   <feature.icon className="h-6 w-6 text-primary" />
