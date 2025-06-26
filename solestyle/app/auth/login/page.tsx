@@ -20,7 +20,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
-
+  console.log("formData", formData)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
@@ -36,7 +36,7 @@ export default function LoginPage() {
       })
 
       const data = await response.json()
-
+      console.log("data", data)
       if (response.ok) {
         router.push("/")
         router.refresh()
