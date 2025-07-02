@@ -224,7 +224,7 @@ export default function ProductsPage() {
                         }
                       >
                         <Image
-                          src={product.primaryImage || "/placeholder.svg?height=300&width=300"}
+                          src={ "/placeholder.svg?height=300&width=300"}
                           alt={product.name}
                           width={300}
                           height={300}

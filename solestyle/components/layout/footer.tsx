@@ -1,24 +1,33 @@
-import Link from "next/link"
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import Link from "next/link";
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function Footer() {
   return (
     <footer className="bg-muted/50 border-t">
-      <div className="container mx-auto px-4 py-12">
+      <div className="px-5 sm:px-20 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">SS</span>
+                <span className="text-primary-foreground font-bold text-sm">
+                  SS
+                </span>
               </div>
               <span className="font-bold text-xl">ShoeStore</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Your premier destination for quality footwear. We offer the latest styles and timeless classics for every
-              occasion.
+              Your premier destination for quality footwear. We offer the latest
+              styles and timeless classics for every occasion.
             </p>
             <div className="flex space-x-2">
               <Button variant="ghost" size="icon">
@@ -41,27 +50,42 @@ export function Footer() {
             <h3 className="font-semibold">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/category/sneakers" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/category/sneakers"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Sneakers
                 </Link>
               </li>
               <li>
-                <Link href="/category/boots" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/category/boots"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Boots
                 </Link>
               </li>
               <li>
-                <Link href="/category/sandals" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/category/sandals"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Sandals
                 </Link>
               </li>
               <li>
-                <Link href="/category/athletic" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/category/athletic"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Athletic
                 </Link>
               </li>
               <li>
-                <Link href="/category/dress-shoes" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/category/dress-shoes"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Dress Shoes
                 </Link>
               </li>
@@ -73,27 +97,42 @@ export function Footer() {
             <h3 className="font-semibold">Customer Service</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/contact"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/shipping" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/shipping"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Shipping Info
                 </Link>
               </li>
               <li>
-                <Link href="/returns" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/returns"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Returns & Exchanges
                 </Link>
               </li>
               <li>
-                <Link href="/size-guide" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/size-guide"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Size Guide
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/faq"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   FAQ
                 </Link>
               </li>
@@ -128,17 +167,25 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">© 2024 ShoeStore. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">
+            © 2024 ShoeStore. All rights reserved.
+          </p>
           <div className="flex space-x-4 mt-4 sm:mt-0">
-            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
+            <Link
+              href="/privacy"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground">
+            <Link
+              href="/terms"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
               Terms of Service
             </Link>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }
