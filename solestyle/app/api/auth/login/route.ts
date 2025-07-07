@@ -1,5 +1,8 @@
+export const runtime = "nodejs";
+
 import { type NextRequest, NextResponse } from "next/server"
 import { getUserByEmail, verifyPassword, generateToken } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,7 +42,6 @@ export async function POST(request: NextRequest) {
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7, // 7 days
     })
-
     return response
   } catch (error) {
     console.error("Login error:", error)

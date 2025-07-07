@@ -17,20 +17,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { useUser } from "@/components/user-context"
 
-interface HeaderProps {
-  cartItemCount?: number
-  user?: {
-    firstName: string
-    lastName: string
-    role: string
-  } | null
-}
-
-export function Header({ cartItemCount = 0, user }: HeaderProps) {
+export function Header({ cartItemCount = 0 }: { cartItemCount?: number }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const router = useRouter()
+  const { user } = useUser();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()

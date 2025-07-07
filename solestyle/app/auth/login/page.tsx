@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2 } from "lucide-react"
+import { useUser } from "@/components/user-context"
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
+  const { setUser } = useUser()
   console.log("formData", formData)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,12 +35,18 @@ export default function LoginPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       })
 
       const data = await response.json()
       console.log("data", data)
       if (response.ok) {
-        router.push("/")
+        setUser(data.user)
+        if (data.user.role === "admin") {
+          router.push("/admin")
+        } else {
+          router.push("/")
+        }
         router.refresh()
       } else {
         setError(data.error || "Login failed")
