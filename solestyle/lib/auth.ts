@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { query } from "./db"
 
@@ -12,20 +11,20 @@ export interface User {
   role: "customer" | "admin"
 }
 
-export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, 12)
-}
+// export async function hashPassword(password: string): Promise<string> {
+//   return bcrypt.hash(password, 12)
+// }
 
-export async function verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
-  try {
-    if (!password || !hashedPassword) {
-      return false;
-    }
-    return await bcrypt.compare(password, hashedPassword);
-  } catch (error) {
-    return false;
-  }
-}
+// export async function verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
+//   try {
+//     if (!password || !hashedPassword) {
+//       return false;
+//     }
+//     return await bcrypt.compare(password, hashedPassword);
+//   } catch (error) {
+//     return false;
+//   }
+// }
 
 export function generateToken(user: User): string {
   return jwt.sign(
