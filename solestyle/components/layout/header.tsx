@@ -21,18 +21,14 @@ import { useUser } from "@/components/user-context"
 
 interface HeaderProps {
   cartItemCount?: number;
-  user?: {
-    firstName: string;
-    lastName: string;
-    role: string;
-  } | null;
 }
 
-export function Header({ cartItemCount = 0, user }: HeaderProps) {
+export function Header({ cartItemCount = 0 }: { cartItemCount?: number }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const { user, loading } = useUser();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -180,44 +176,39 @@ export function Header({ cartItemCount = 0, user }: HeaderProps) {
             </Button>
 
             {/* User menu */}
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <User className="h-4 w-4" />
-                    <span className="sr-only">User menu</span>
+            {!loading && user ? (
+              <>
+                {user.role === "admin" ? (
+                  <Button asChild variant="outline">
+                    <Link href="/admin">Dashboard</Link>
                   </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <div className="px-2 py-1.5 text-sm font-medium">
-                    {user.firstName} {user.lastName}
-                  </div>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/account">My Account</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/orders">Order History</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/wishlist">Wishlist</Link>
-                  </DropdownMenuItem>
-                  {user.role === "admin" && (
-                    <>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem asChild>
-                        <Link href="/admin">Admin Dashboard</Link>
-                      </DropdownMenuItem>
-                    </>
-                  )}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Button variant="ghost" size="sm" asChild>
+                ) : (
+                  <Button asChild variant="outline">
+                    <Link href="/account">Account</Link>
+                  </Button>
+                )}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <User className="h-4 w-4" />
+                      <span className="sr-only">User menu</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <div className="px-2 py-1.5 text-sm font-medium">
+                      {user.firstName} {user.lastName}
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/orders">Order History</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : !loading && (
+              <Button asChild variant="outline">
                 <Link href="/auth/login">Sign In</Link>
               </Button>
             )}
