@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { ShoppingCart, User, Search, Menu, Heart, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { ShoppingCart, User, Search, Menu, Heart, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,39 +19,46 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useUser } from "@/components/user-context"
 
-export function Header({ cartItemCount = 0 }: { cartItemCount?: number }) {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const router = useRouter()
-  const { user } = useUser();
+interface HeaderProps {
+  cartItemCount?: number;
+  user?: {
+    firstName: string;
+    lastName: string;
+    role: string;
+  } | null;
+}
+
+export function Header({ cartItemCount = 0, user }: HeaderProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
-      setSearchQuery("")
-      setIsSearchOpen(false)
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+      setIsSearchOpen(false);
     }
-  }
+  };
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" })
-      router.push("/")
-      router.refresh()
+      await fetch("/api/auth/logout", { method: "POST" });
+      router.push("/");
+      router.refresh();
     } catch (error) {
-      console.error("Logout failed:", error)
+      console.error("Logout failed:", error);
     }
-  }
+  };
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Sneakers", href: "/category/sneakers" },
-    { name: "Boots", href: "/category/boots" },
-    { name: "Sandals", href: "/category/sandals" },
-    { name: "Athletic", href: "/category/athletic" },
-    { name: "Dress Shoes", href: "/category/dress-shoes" },
-  ]
+    { name: "Shop", href: "/shop" },
+    { name: "About Us", href: "/about-us" },
+    { name: "Contact Us", href: "/contact-us" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60">
@@ -71,7 +78,9 @@ export function Header({ cartItemCount = 0 }: { cartItemCount?: number }) {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="block px-2 py-1 text-lg font-medium hover:text-primary"
+                    className={`block px-2 py-1 text-lg font-medium hover:text-primary ${
+                      pathname === item.href ? "border-b-2 border-primary" : ""
+                    }`}
                   >
                     {item.name}
                   </Link>
@@ -83,9 +92,13 @@ export function Header({ cartItemCount = 0 }: { cartItemCount?: number }) {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">SS</span>
+              <span className="text-primary-foreground font-bold text-sm">
+                SS
+              </span>
             </div>
-            <span className="font-bold text-xl hidden sm:inline-block">ShoeStore</span>
+            <span className="font-bold text-xl hidden sm:inline-block">
+              ShoeStore
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -94,42 +107,57 @@ export function Header({ cartItemCount = 0 }: { cartItemCount?: number }) {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium transition-colors hover:text-primary"
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  pathname === item.href
+                    ? "border-b-2 border-primary pb-1"
+                    : "pb-2"
+                }`}
               >
                 {item.name}
               </Link>
             ))}
           </nav>
 
-          {/* Search */}
-          <div className="flex items-center space-x-2">
-            {isSearchOpen ? (
-              <form onSubmit={handleSearch} className="flex items-center space-x-2">
-                <Input
-                  type="search"
-                  placeholder="Search shoes..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-[200px] sm:w-[300px]"
-                  autoFocus
-                />
-                <Button type="submit" size="icon" variant="ghost">
-                  <Search className="h-4 w-4" />
-                </Button>
-                <Button type="button" size="icon" variant="ghost" onClick={() => setIsSearchOpen(false)}>
-                  <X className="h-4 w-4" />
-                </Button>
-              </form>
-            ) : (
-              <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(true)} className="hidden sm:flex">
-                <Search className="h-4 w-4" />
-                <span className="sr-only">Search</span>
-              </Button>
-            )}
-          </div>
-
           {/* Right side actions */}
           <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2">
+              {isSearchOpen ? (
+                <form
+                  onSubmit={handleSearch}
+                  className="flex items-center space-x-2"
+                >
+                  <Input
+                    type="search"
+                    placeholder="Search shoes..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-[200px] sm:w-[300px]"
+                    autoFocus
+                  />
+                  <Button type="submit" size="icon" variant="ghost">
+                    <Search className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => setIsSearchOpen(false)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </form>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsSearchOpen(true)}
+                  className="hidden sm:flex"
+                >
+                  <Search className="h-4 w-4" />
+                  <span className="sr-only">Search</span>
+                </Button>
+              )}
+            </div>
             {/* Wishlist */}
             <Button variant="ghost" size="icon" asChild>
               <Link href="/wishlist">
@@ -183,7 +211,9 @@ export function Header({ cartItemCount = 0 }: { cartItemCount?: number }) {
                     </>
                   )}
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>Sign Out</DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    Sign Out
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -195,5 +225,5 @@ export function Header({ cartItemCount = 0 }: { cartItemCount?: number }) {
         </div>
       </div>
     </header>
-  )
+  );
 }
